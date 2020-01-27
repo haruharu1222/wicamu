@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">wicamu_main</string>
+    <string name="title_calendar">カレンダー</string>
+    <string name="title_wicamu">ウィーカム</string>
+<!--    <string name="title_notifications">Notifications</string>-->
+</resources>
