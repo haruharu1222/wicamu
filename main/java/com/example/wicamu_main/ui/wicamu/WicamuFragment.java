@@ -36,7 +36,7 @@ public class WicamuFragment extends Fragment {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.fragment_wicamu);
 
-                textView.setText("s");
+                textView.setText("");
             }
         }
 

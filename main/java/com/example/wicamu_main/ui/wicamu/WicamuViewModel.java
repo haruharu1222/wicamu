@@ -7,9 +7,18 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+
 public class WicamuViewModel extends View {
 
     Paint paint;
+
+    private float x=700;
+    private float y=1000;
+    private float r=300;
+    private float a=200;
+  // ルート３は"17320/10000”;
+
+
 
     public WicamuViewModel(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -18,28 +27,42 @@ public class WicamuViewModel extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
+        //縦：2000
+        //横：1400
+
+
         // 背景、半透明
         canvas.drawColor(Color.argb(127, 0, 127, 63));
 
-        // 円
-        paint.setColor(Color.argb(255, 68, 255, 255));
+        // must円
+        paint.setColor(Color.argb(255, 0, 255, 0));
         paint.setStrokeWidth(30);
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
         // (x1,y1,r,paint) 中心x1座標, 中心y1座標, r半径
-        canvas.drawCircle(450, 450, 100, paint);
+        canvas.drawCircle(x, y-(17320*(2*r-a))/(3*10000), r, paint);
+        //canvas.drawCircle(x, y-2*r/3, r, paint);
+        //canvas.drawCircle(x, y-2*r/3, r, paint);
 
-        // 矩形
-        paint.setColor(Color.argb(255, 255, 190, 0));
-        paint.setStrokeWidth(10);
+        // can円
+        paint.setColor(Color.argb(255, 255, 0, 0));
+        paint.setStrokeWidth(30);
+        paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
-        // (x1,y1,x2,y2,paint) 左上の座標(x1,y1), 右下の座標(x2,y2)
-        canvas.drawRect(480, 480, 850, 880, paint);
+        // (x1,y1,r,paint) 中心x1座標, 中心y1座標, r半径
+        canvas.drawCircle(x-(2*r-a)/2, y+(17320*(2*r-a))/(10000*6), r, paint);
+        //canvas.drawCircle(x-r/root_three, y+r/3, r, paint);
+        //canvas.drawCircle(x-r/2, y+r/3, r, paint);
 
-        // 線
-        paint.setStrokeWidth(15);
-        paint.setColor(Color.argb(255, 0, 255, 120));
-        // (x1,y1,x2,y2,paint) 始点の座標(x1,y1), 終点の座標(x2,y2)
-        canvas.drawLine(350, 850, 750, 630, paint);
+        // will円
+        paint.setColor(Color.argb(255, 0, 0, 255));
+        paint.setStrokeWidth(30);
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
+        // (x1,y1,r,paint) 中心x1座標, 中心y1座標, r半径
+        canvas.drawCircle(x+(2*r-a)/2, y+(17320*(2*r-a))/(10000*6), r, paint);
+        //canvas.drawCircle(x+r/root_three, y+r/3, r, paint);
+        //canvas.drawCircle(x+r/2, y+r/3, r, paint);
     }
 }
