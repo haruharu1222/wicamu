@@ -1,20 +1,122 @@
 package com.example.wicamu_main.ui.calendar;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import com.example.wicamu_main.R;
 
-public class CalendarViewModel extends ViewModel{
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
-    private MutableLiveData<String> mText;
+public class CalendarViewModel extends BaseAdapter {
+    private List<Date> dateArray = new ArrayList();
+    private Context mContext;
+    private CalendarClass mCalendarClass;
+    private LayoutInflater mLayoutInflater;
 
-    public CalendarViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("aaaaaaaaaaaaaaaat");
+
+
+    //カスタムセルを拡張したらここでWigetを定義
+    private static class ViewHolder {
+        public TextView dateText;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public CalendarViewModel(Context context){
+        mContext = context;
+        mLayoutInflater = LayoutInflater.from(mContext);
+        mCalendarClass = new CalendarClass();
+        dateArray = mCalendarClass.getDays();
+    }
+
+    @Override
+    public int getCount() {
+        return dateArray.size();
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = null;
+            holder = new ViewHolder();
+            holder.dateText = convertView.findViewById(R.id.dateText);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder)convertView.getTag();
+        }
+
+        //セルのサイズを指定
+        float dp = mContext.getResources().getDisplayMetrics().density;
+        AbsListView.LayoutParams params = new AbsListView.LayoutParams(parent.getWidth()/7 - (int)dp, (parent.getHeight() - (int)dp * mCalendarClass.getWeeks() ) / mCalendarClass.getWeeks());
+        convertView.setLayoutParams(params);
+
+        //日付のみ表示させる
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d", Locale.US);
+        holder.dateText.setText(dateFormat.format(dateArray.get(position)));
+
+        //当月以外のセルをグレーアウト
+        if (mCalendarClass.isCurrentMonth(dateArray.get(position))){
+            convertView.setBackgroundColor(Color.WHITE);
+        }else {
+            convertView.setBackgroundColor(Color.LTGRAY);
+        }
+
+        //日曜日を赤、土曜日を青に
+        int colorId;
+        switch (mCalendarClass.getDayOfWeek(dateArray.get(position))){
+            case 1:
+                colorId = Color.RED;
+                break;
+            case 7:
+                colorId = Color.BLUE;
+                break;
+
+            default:
+                colorId = Color.BLACK;
+                break;
+        }
+        holder.dateText.setTextColor(colorId);
+
+        return convertView;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    //表示月を取得
+    public String getTitle(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM", Locale.US);
+        return format.format(mCalendarClass.mCalendar.getTime());
+    }
+
+    //翌月表示
+    public void nextMonth(){
+        mCalendarClass.nextMonth();
+        dateArray = mCalendarClass.getDays();
+        this.notifyDataSetChanged();
+    }
+
+    //前月表示
+    public void prevMonth(){
+        mCalendarClass.prevMonth();
+        dateArray = mCalendarClass.getDays();
+        this.notifyDataSetChanged();
     }
 }

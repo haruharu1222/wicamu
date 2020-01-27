@@ -2,5 +2,6 @@
     <string name="app_name">wicamu_main</string>
     <string name="title_calendar">カレンダー</string>
     <string name="title_wicamu">ウィーカム</string>
-<!--    <string name="title_notifications">Notifications</string>-->
+    <string name="text1">TOKYO 2020</string>
+    <string name="text2">2020年7月24日 まであと</string>
 </resources>
