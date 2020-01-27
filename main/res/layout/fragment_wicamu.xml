@@ -4,6 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- ここは自分のプロジェクトに合わせる -->
+    <com.example.wicamu_main.ui.wicamu.WicamuViewModel
+        android:layout_width="340dp"
+        android:layout_height="420dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/text_wicamu"
         android:layout_width="match_parent"
